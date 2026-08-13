@@ -1,3 +1,4 @@
+cat > index.html << 'EOF'
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,75 +15,103 @@
 </head>
 <body>
 
-  <main class="arena">
+  <!-- ============ PANTALLA DE INICIO ============ -->
+  <section id="startScreen" class="screen start-screen">
+    <div class="start-glow" aria-hidden="true"></div>
+    <div class="start-content">
+      <span class="start-eyebrow">Duelo clásico</span>
+      <h1 class="start-title">Piedra, Papel o Tijera</h1>
+      <p class="start-subtitle">Elige tu jugada. La máquina elige la suya. Gana quien tenga más nervio.</p>
 
-    <header class="ticket-header">
-      <span class="eyebrow">Duelo clásico</span>
-      <h1>Piedra, Papel o Tijera</h1>
-      <p class="subtitle">Elige tu jugada. La máquina elige la suya. Gana quien tenga más nervio.</p>
-    </header>
+      <div class="start-menu">
+        <button id="newGameBtn" class="menu-btn menu-btn-primary" type="button">Nueva partida</button>
+        <button id="loadGameBtn" class="menu-btn" type="button">Cargar partida</button>
+        <button id="exitGameBtn" class="menu-btn menu-btn-ghost" type="button">Salir del juego</button>
+      </div>
 
-    <section class="scoreboard" aria-label="Marcador">
-      <div class="score-block player-block">
-        <span class="score-label">Tú</span>
-        <span class="score-value" id="humanScore">0</span>
-      </div>
-      <div class="vs-divider" aria-hidden="true">
-        <span>VS</span>
-      </div>
-      <div class="score-block computer-block">
-        <span class="score-label">Máquina</span>
-        <span class="score-value" id="computerScore">0</span>
-      </div>
-    </section>
+      <p class="start-note" id="startNote" role="status"></p>
+    </div>
+  </section>
 
-    <section class="duel-stage" aria-live="polite">
-      <div class="hand-slot" id="humanHandSlot">
-        <div class="hand-icon" id="humanHandIcon" data-empty="true">
-          <span class="hand-placeholder">?</span>
+  <!-- ============ PANTALLA DE JUEGO ============ -->
+  <section id="gameScreen" class="screen game-screen" hidden>
+
+    <div class="game-topbar">
+      <span class="game-topbar-title">Piedra, Papel o Tijera</span>
+      <button id="muteBtn" class="icon-btn" type="button" aria-pressed="false" aria-label="Silenciar sonido">
+        <span id="muteIcon">🔊</span>
+      </button>
+    </div>
+
+    <main class="arena">
+
+      <section class="scoreboard" aria-label="Marcador">
+        <div class="score-block player-block">
+          <span class="score-label">Tú</span>
+          <span class="score-value" id="humanScore">0</span>
         </div>
-        <span class="hand-caption">Tu jugada</span>
-      </div>
-
-      <div class="result-flash" id="resultFlash">
-        <p id="resultText">Elige una jugada para empezar</p>
-      </div>
-
-      <div class="hand-slot" id="computerHandSlot">
-        <div class="hand-icon" id="computerHandIcon" data-empty="true">
-          <span class="hand-placeholder">?</span>
+        <div class="vs-divider" aria-hidden="true">
+          <span>VS</span>
         </div>
-        <span class="hand-caption">Máquina</span>
-      </div>
-    </section>
+        <div class="score-block computer-block">
+          <span class="score-label">Máquina</span>
+          <span class="score-value" id="computerScore">0</span>
+        </div>
+      </section>
 
-    <section class="choices" aria-label="Elige tu jugada">
-      <button class="choice-btn" data-choice="piedra" type="button">
-        <span class="choice-icon">✊</span>
-        <span class="choice-label">Piedra</span>
-      </button>
-      <button class="choice-btn" data-choice="papel" type="button">
-        <span class="choice-icon">✋</span>
-        <span class="choice-label">Papel</span>
-      </button>
-      <button class="choice-btn" data-choice="tijera" type="button">
-        <span class="choice-icon">✌️</span>
-        <span class="choice-label">Tijera</span>
-      </button>
-    </section>
+      <section class="duel-stage" aria-live="polite">
+        <div class="hand-slot">
+          <div class="hand-icon" id="humanHandIcon" data-empty="true">
+            <span class="hand-placeholder">?</span>
+          </div>
+          <span class="hand-caption">Tu jugada</span>
+        </div>
 
-    <section class="log-section">
-      <div class="log-header">
-        <h2>Historial de rondas</h2>
-        <button class="reset-btn" id="resetBtn" type="button">Reiniciar marcador</button>
-      </div>
-      <ol class="log-list" id="logList">
-        <li class="log-empty">Todavía no hay rondas jugadas.</li>
-      </ol>
-    </section>
+        <div class="result-flash">
+          <p id="resultText">Elige una jugada para empezar</p>
+        </div>
 
-  </main>
+        <div class="hand-slot">
+          <div class="hand-icon" id="computerHandIcon" data-empty="true">
+            <span class="hand-placeholder">?</span>
+          </div>
+          <span class="hand-caption">Máquina</span>
+        </div>
+      </section>
+
+      <section class="choices" aria-label="Elige tu jugada">
+        <button class="choice-btn" data-choice="piedra" type="button">
+          <span class="choice-icon" data-icon="piedra"></span>
+          <span class="choice-label">Piedra</span>
+        </button>
+        <button class="choice-btn" data-choice="papel" type="button">
+          <span class="choice-icon" data-icon="papel"></span>
+          <span class="choice-label">Papel</span>
+        </button>
+        <button class="choice-btn" data-choice="tijera" type="button">
+          <span class="choice-icon" data-icon="tijera"></span>
+          <span class="choice-label">Tijera</span>
+        </button>
+      </section>
+
+      <section class="game-controls">
+        <button class="control-btn" id="resetBtn" type="button">Reiniciar partida</button>
+        <button class="control-btn control-btn-exit" id="exitRoundBtn" type="button">Salir de la partida</button>
+      </section>
+
+      <section class="log-section">
+        <div class="log-header">
+          <h2>Historial de rondas</h2>
+        </div>
+        <ol class="log-list" id="logList">
+          <li class="log-empty">Todavía no hay rondas jugadas.</li>
+        </ol>
+      </section>
+
+    </main>
+  </section>
 
   <script src="app.js"></script>
 </body>
 </html>
+EOF
