@@ -1,4 +1,3 @@
-cat > app.js << 'EOF'
 // ---------------------------------------------------------
 // Piedra, Papel o Tijera — implementación orientada a objetos
 // ---------------------------------------------------------
@@ -495,4 +494,3 @@ class App {
 document.addEventListener("DOMContentLoaded", () => {
   new App();
 });
-EOF
